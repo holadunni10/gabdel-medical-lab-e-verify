@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Gabdel Global Medical Laboratory</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root{
+  --navy:#0a1628;--navy2:#132240;--navy3:#1e3460;
+  --green:#1a6b3c;--green2:#228b4e;--green3:#e6f4ec;
+  --gold:#c9a84c;--gold2:#e8c97a;
+  --cream:#faf8f3;--white:#fff;
+  --red:#c0392b;--red2:#fdecea;
+  --td:#0a1628;--tm:#3a4a6b;--tmut:#7a8aab;
+  --bdr:rgba(10,22,40,.12);--bdrg:rgba(201,168,76,.3);
+  --sh:0 8px 32px rgba(10,22,40,.12);--shl:0 20px 60px rgba(10,22,40,.18);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--td);min-height:100vh}
+
+/* NAV */
+nav{background:var(--navy);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:62px;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(201,168,76,.2)}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-name{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;color:#fff;letter-spacing:.03em;line-height:1.2}
+.nav-name span{color:var(--gold)}
+.nav-name small{display:block;font-size:10px;font-weight:400;color:rgba(255,255,255,.5);letter-spacing:.05em}
+.nav-tag{font-size:10px;color:var(--gold2);background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);border-radius:20px;padding:3px 10px;letter-spacing:.05em;text-transform:uppercase}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy3) 100%);padding:2.2rem 1.5rem 1.8rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:480px;height:480px;background:radial-gradient(circle,rgba(26,107,60,.1) 0%,transparent 70%);pointer-events:none}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,4vw,36px);font-weight:700;color:#fff;letter-spacing:.04em;line-height:1.1;margin-top:10px}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero p{font-size:12.5px;color:rgba(255,255,255,.55);margin-top:6px;letter-spacing:.05em;text-transform:uppercase}
+.hero-div{width:48px;height:2px;background:var(--gold);margin:12px auto 0;border-radius:2px}
+
+/* LAYOUT */
+.main{max-width:1160px;margin:0 auto;padding:1.8rem 1.2rem 3.5rem;display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;align-items:start}
+@media(max-width:820px){.main{grid-template-columns:1fr}}
+
+/* FORM CARD */
+.form-card{background:#fff;border-radius:14px;border:1px solid var(--bdr);box-shadow:var(--sh);overflow:hidden;animation:fadeUp .45s ease both}
+.fc-head{background:var(--navy);padding:15px 22px;display:flex;align-items:center;gap:9px}
+.fc-head svg{width:16px;height:16px;fill:var(--gold);flex-shrink:0}
+.fc-head h2{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:#fff;letter-spacing:.03em}
+.fb{padding:20px}
+
+/* INPUTS */
+.fl{display:block;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--tmut);margin-bottom:5px}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+.fr3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-bottom:12px}
+.fg{margin-bottom:12px}
+input[type=text],input[type=date],select,textarea{width:100%;padding:9px 12px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--td);background:var(--cream);border:1px solid var(--bdr);border-radius:7px;outline:none;transition:border .18s,box-shadow .18s;appearance:none;-webkit-appearance:none}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.11);background:#fff}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%237a8aab' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center;padding-right:28px}
+textarea{resize:vertical;min-height:72px;line-height:1.5}
+
+/* REMARK SELECT COLOURS */
+.rsm{font-weight:500;transition:background .15s,border-color .15s,color .15s}
+.rsm-n{background:#e6f4ec!important;border-color:#228b4e!important;color:#1a6b3c!important}
+.rsm-a{background:#fdecea!important;border-color:#c0392b!important;color:#c0392b!important}
+.rsm-x{background:var(--cream)!important;color:var(--tmut)!important}
+
+/* SECTION SEPARATOR */
+.ssep{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);padding:3px 0 10px;border-bottom:1px solid var(--bdrg);margin-bottom:14px;display:flex;align-items:center;gap:7px;margin-top:4px}
+.ssep::after{content:'';flex:1;height:1px;background:var(--bdrg)}
+
+/* CHECKBOX GRID */
+.chk-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;margin-bottom:13px}
+.chk-lbl{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--tm);cursor:pointer;padding:3px 5px;border-radius:5px;transition:background .12s;user-select:none}
+.chk-lbl:hover{background:rgba(201,168,76,.07)}
+.chk-lbl input[type=checkbox]{width:13px;height:13px;accent-color:var(--green);flex-shrink:0;cursor:pointer}
+.chk-lbl input:checked+span{color:var(--green);font-weight:500}
+
+/* ACTIVE TEST ROWS */
+.active-tests{display:flex;flex-direction:column;gap:7px;margin-bottom:11px}
+.test-row{background:var(--cream);border:1px solid var(--bdr);border-radius:7px;padding:8px 10px;animation:fadeUp .2s ease both}
+.test-row-name{font-size:11px;font-weight:600;color:var(--td);padding-bottom:5px;border-bottom:1px solid rgba(10,22,40,.07);margin-bottom:7px}
+.test-row-fields{display:grid;grid-template-columns:1fr 1fr auto;gap:7px;align-items:center}
+.btn-rem{width:28px;height:28px;border-radius:5px;border:1px solid rgba(192,57,43,.2);background:rgba(192,57,43,.07);color:var(--red);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s;line-height:1;padding:0}
+.btn-rem:hover{background:rgba(192,57,43,.15)}
+
+/* CUSTOM TEST ROWS */
+.custom-list{display:flex;flex-direction:column;gap:7px;margin-bottom:10px}
+.cust-row{background:var(--cream);border:1px dashed var(--bdrg);border-radius:7px;padding:8px 10px;animation:fadeUp .2s ease both}
+.cust-row-fields{display:grid;grid-template-columns:22px 1fr 1fr 1fr auto;gap:6px;align-items:center}
+.row-num{width:21px;height:21px;background:var(--navy);color:var(--gold);border-radius:50%;font-size:9.5px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.btn-add-row{width:100%;padding:8px 12px;background:transparent;border:1px dashed var(--bdrg);border-radius:7px;color:var(--gold);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:background .15s}
+.btn-add-row:hover{background:rgba(201,168,76,.07)}
+.btn-add-row svg{width:12px;height:12px;fill:var(--gold)}
+
+/* FITNESS DECISION */
+.fitness-box{border-radius:9px;border:1.5px solid var(--bdr);overflow:hidden;margin-bottom:13px}
+.fitness-title{background:var(--navy);color:var(--gold);font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:8px 14px;display:flex;align-items:center;gap:6px}
+.fitness-title svg{width:12px;height:12px;fill:var(--gold)}
+.fitness-opts{display:grid;grid-template-columns:1fr 1fr}
+.fit-opt{padding:13px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:background .13s;border:2px solid transparent;margin:-1px}
+.fit-opt:first-child{border-right:1px solid var(--bdr)}
+.fit-opt input[type=radio]{width:15px;height:15px;accent-color:var(--green);cursor:pointer;flex-shrink:0}
+.fit-opt-lbl{font-size:13px;font-weight:500}
+.sel-fit{background:var(--green3)!important;border-color:var(--green2)!important}
+.sel-fit .fit-opt-lbl{color:var(--green)!important}
+.sel-unfit{background:var(--red2)!important;border-color:var(--red)!important}
+.sel-unfit .fit-opt-lbl{color:var(--red)!important}
+
+/* COMMENT BOX */
+.cmnt-box{background:var(--cream);border:1px solid var(--bdr);border-radius:8px;overflow:hidden;margin-bottom:14px}
+.cmnt-head{background:var(--navy2);padding:7px 13px;font-size:10px;font-weight:500;color:rgba(255,255,255,.65);letter-spacing:.07em;text-transform:uppercase;display:flex;align-items:center;gap:5px}
+.cmnt-head svg{width:11px;height:11px;fill:rgba(255,255,255,.45)}
+.cmnt-box textarea{border:none;border-radius:0;background:transparent;font-size:13px;padding:9px 13px}
+.cmnt-box textarea:focus{box-shadow:none;background:rgba(255,255,255,.5)}
+
+/* GENERATE BUTTON */
+.btn-gen{width:100%;margin-top:4px;padding:13px;background:var(--navy);color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--gold);border-radius:8px;cursor:pointer;transition:background .2s,color .2s,transform .1s;display:flex;align-items:center;justify-content:center;gap:7px}
+.btn-gen:hover{background:var(--gold);color:var(--navy)}
+.btn-gen:active{transform:scale(.98)}
+.btn-gen svg{width:14px;height:14px}
+
+/* PREVIEW PANEL */
+.preview-panel{position:sticky;top:74px}
+.prev-label{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--tmut);margin-bottom:10px;padding-left:3px}
+.cert-wrap{background:#fff;border-radius:14px;border:1px solid var(--bdr);box-shadow:var(--shl);overflow:hidden;animation:fadeUp .45s .1s ease both}
+.empty-state{padding:46px 20px;text-align:center;color:var(--tmut)}
+.empty-state svg{width:44px;height:44px;opacity:.22;margin-bottom:10px}
+.empty-state p{font-size:12px;line-height:1.6}
+
+/* ACTION BUTTONS */
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:11px}
+.btn-act{padding:10px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;border-radius:7px;cursor:pointer;border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;gap:5px;transition:all .2s}
+.btn-act svg{width:13px;height:13px}
+.btn-print{background:var(--navy);color:var(--gold);border-color:var(--navy)}
+.btn-print:hover{opacity:.87}
+.btn-reset{background:#fff;color:var(--tm)}
+.btn-reset:hover{background:var(--cream)}
+
+/* ═══════════ CERTIFICATE ═══════════ */
+#certificate{font-family:'Times New Roman',Georgia,serif;background:#fff;padding:22px 24px 18px;color:#111;font-size:11px;line-height:1.5}
+.c-topbar{height:5px;background:linear-gradient(90deg,#1a6b3c 0%,#0a1628 40%,#c9a84c 65%,#0a1628 100%);margin:-22px -24px 14px}
+.c-header{display:flex;align-items:flex-start;gap:10px;margin-bottom:9px}
+.c-titles{flex:1}
+.c-lab-name{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:#1a6b3c;letter-spacing:2px;text-transform:uppercase;line-height:1.1}
+.c-lab-italic{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12.5px;color:#228b4e;letter-spacing:.5px}
+.c-lab-addr{font-size:8.5px;color:#555;line-height:1.4;margin-top:3px}
+.c-dept-bar{background:#1a6b3c;color:#fff;text-align:center;font-size:9.5px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;padding:4px 8px;margin-bottom:5px}
+.c-form-title{text-align:center;font-size:13px;font-weight:bold;text-decoration:underline;letter-spacing:1.5px;text-transform:uppercase;color:#0a1628;margin-bottom:9px}
+
+/* PATIENT INFO TABLE */
+.c-info-tbl{width:100%;border-collapse:collapse;font-size:10.5px;margin-bottom:7px;border:0.5px solid #bbb}
+.c-info-tbl td{border:0.5px solid #ccc;padding:4px 7px;vertical-align:top}
+.c-info-tbl .ci-lbl{font-size:8.5px;font-weight:bold;color:#666;text-transform:uppercase;letter-spacing:.5px;display:block}
+.c-info-tbl .ci-val{font-weight:bold;color:#0a1628;font-size:11px;display:block}
+
+/* CERT SECTION TITLE */
+.c-sec-title{background:#1a6b3c;color:#fff;font-size:9.5px;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;padding:4px 7px;margin:7px 0 0}
+
+/* RESULTS TABLE */
+.c-tbl{width:100%;border-collapse:collapse}
+.c-tbl td{border:0.5px solid #ccc;padding:3.5px 6px;font-size:10px;color:#111;vertical-align:top}
+.c-tbl tr:nth-child(even) td{background:#f8f8f5}
+.c-tbl td:first-child{font-weight:500;width:50%}
+.c-tbl td.rn{color:#1a6b3c;font-weight:700;font-size:9.5px}
+.c-tbl td.ra{color:#c0392b;font-weight:700;font-size:9.5px}
+.c-tbl td.rx{color:#999;font-size:9.5px}
+
+/* FITNESS BADGE ON CERT */
+.c-fit-badge{display:flex;align-items:center;justify-content:center;gap:9px;margin:8px 0 6px;padding:7px 12px;border-radius:4px;font-family:'Cormorant Garamond',serif;font-size:13.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.c-fit-badge.badge-fit{background:#e6f4ec;border:2px solid #1a6b3c;color:#1a6b3c}
+.c-fit-badge.badge-unfit{background:#fdecea;border:2px solid #c0392b;color:#c0392b}
+
+/* COMMENT ON CERT */
+.c-comment-cert{font-size:10px;color:#222;border-left:3px solid #c9a84c;padding:5px 9px;background:#faf8f3;margin:5px 0 9px;border-radius:0 3px 3px 0;line-height:1.55}
+
+/* CERT FOOTER */
+.c-footer{display:flex;justify-content:space-between;align-items:flex-end;margin-top:8px;gap:7px}
+.c-foot-left{font-size:9px;color:#333;line-height:1.7}
+.c-foot-left strong{font-size:10px;color:#0a1628}
+.c-qr-zone{text-align:center;flex-shrink:0}
+.c-qr-label{font-size:7.5px;color:#777;margin-top:2px;letter-spacing:.5px;text-transform:uppercase}
+.c-stamp{width:62px;height:62px;border:2px solid #c9a84c;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-size:6.5px;color:rgba(10,22,40,.5);font-style:italic;padding:6px;line-height:1.3;margin-left:auto;margin-bottom:3px}
+.c-expires{font-size:9px;font-weight:bold;color:#0a1628;letter-spacing:.5px;text-align:right}
+.c-refsmall{font-size:8px;color:#aaa;text-align:right;margin-top:1px}
+.c-infobar{display:flex;justify-content:space-between;font-size:8px;color:#999;margin-top:6px;padding-top:5px;border-top:0.5px solid #ddd}
+.c-bottombar{height:4px;background:linear-gradient(90deg,#1a6b3c 0%,#0a1628 40%,#c9a84c 70%,#0a1628 100%);margin:8px -24px -18px}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}
+
+@media print{
+  body{background:#fff}
+  nav,.hero,.form-card,.prev-label,.actions,footer,.cert-wrap>:not(#certificate){display:none!important}
+  .main{display:block;padding:0;max-width:100%}
+  .preview-panel{position:static}
+  .cert-wrap{box-shadow:none;border:none;border-radius:0}
+  #certificate{padding:14mm 16mm}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <svg width="42" height="42" viewBox="0 0 42 42">
+      <circle cx="21" cy="21" r="20" fill="#1a6b3c" stroke="#c9a84c" stroke-width="1.5"/>
+      <text x="21" y="11.5" text-anchor="middle" font-size="5.8" fill="#c9a84c" font-family="serif" font-weight="bold" letter-spacing="0.4">GABDEL</text>
+      <text x="21" y="16.5" text-anchor="middle" font-size="3.5" fill="#fff" font-family="sans-serif" letter-spacing="0.3">GLOBAL MEDICAL</text>
+      <line x1="21" y1="18" x2="21" y2="31" stroke="#c9a84c" stroke-width="1.3"/>
+      <path d="M15 20 Q21 17.5 27 20" stroke="#fff" stroke-width=".8" fill="none"/>
+      <path d="M18 18 C15.5 21 15.5 25.5 21 24.5 C26.5 23.5 26.5 27.5 24 30" stroke="#fff" stroke-width=".85" fill="none"/>
+      <path d="M24 18 C26.5 21 26.5 25.5 21 24.5 C15.5 23.5 15.5 27.5 18 30" stroke="#fff" stroke-width=".85" fill="none"/>
+      <circle cx="21" cy="18" r="1.6" fill="#c9a84c"/>
+      <text x="21" y="38.5" text-anchor="middle" font-size="3.2" fill="#c9a84c" font-family="sans-serif" letter-spacing="0.3">LABORATORY</text>
+    </svg>
+    <div class="nav-name">Gabdel <span>Global</span> Medical<small>Immunology / Laboratory Services</small></div>
+  </div>
+  <span class="nav-tag">Result Certificate</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <svg width="50" height="50" viewBox="0 0 50 50">
+    <circle cx="25" cy="25" r="24" fill="none" stroke="rgba(201,168,76,.22)" stroke-width="1"/>
+    <rect x="21" y="8" width="8" height="34" rx="2" fill="#1a6b3c"/>
+    <rect x="8" y="21" width="34" height="8" rx="2" fill="#1a6b3c"/>
+    <rect x="22.5" y="9" width="5" height="32" rx="1" fill="#c9a84c" opacity=".5"/>
+    <rect x="9" y="22.5" width="32" height="5" rx="1" fill="#c9a84c" opacity=".5"/>
+  </svg>
+  <h1>Laboratory <em>Result Certificate</em></h1>
+  <p>Gabdel Global Medical Laboratory &nbsp;·&nbsp; Ibeju-Lekki, Lagos</p>
+  <div class="hero-div"></div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- ═══ FORM ═══ -->
+<div class="form-card">
+  <div class="fc-head">
+    <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
+    <h2>Patient Information &amp; Test Selection</h2>
+  </div>
+  <div class="fb">
+
+    <div class="ssep">Patient details</div>
+    <div class="fr2">
+      <div><label class="fl">Surname</label><input type="text" id="inp-surname" placeholder="e.g. MOSES"/></div>
+      <div><label class="fl">First Name</label><input type="text" id="inp-firstname" placeholder="e.g. Anwo T."/></div>
+    </div>
+    <div class="fr3">
+      <div><label class="fl">Gender</label>
+        <select id="inp-gender"><option value="">Select</option><option>Male</option><option>Female</option></select>
+      </div>
+      <div><label class="fl">Age</label><input type="text" id="inp-age" placeholder="e.g. 35yrs"/></div>
+      <div><label class="fl">Date</label><input type="date" id="inp-date"/></div>
+    </div>
+    <div class="fr2">
+      <div><label class="fl">Referring Clinician</label><input type="text" id="inp-clinician" placeholder="e.g. Dr. Adeyemi"/></div>
+      <div><label class="fl">Referral Phone</label><input type="text" id="inp-phone" placeholder="e.g. 0803 000 0000"/></div>
+    </div>
+    <div class="fg">
+      <label class="fl">Referred By (Company / HR)</label>
+      <input type="text" id="inp-company" placeholder="e.g. Rasayela Nigeria Limited, Ibeju-Lekki"/>
+    </div>
+    <div class="fr2">
+      <div><label class="fl">Clinical Diagnosis</label><input type="text" id="inp-diagnosis" placeholder="e.g. Pre-employment screening"/></div>
+      <div><label class="fl">Referral Signature</label><input type="text" id="inp-refsig" placeholder="Signing officer name"/></div>
+    </div>
+    <div class="fg">
+      <label class="fl">Certificate Validity</label>
+      <select id="inp-months" style="max-width:200px">
+        <option value="6">6 months</option><option value="3">3 months</option><option value="12">12 months</option>
+      </select>
+    </div>
+
+    <!-- PREGNANCY TEST -->
+    <div class="ssep" style="margin-top:8px">Pregnancy test</div>
+    <div class="chk-grid">
+      <label class="chk-lbl"><input type="checkbox" value="Blood Pregnancy Test"/><span>Blood (Early Detection)</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Urine Pregnancy Test"/><span>Urine Pregnancy Test</span></label>
+    </div>
+
+    <!-- MICROBIOLOGY -->
+    <div class="ssep">Microbiology</div>
+    <div class="chk-grid">
+      <label class="chk-lbl"><input type="checkbox" value="Widal Reaction"/><span>Widal Reaction</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="VDRL/TPHA"/><span>VDRL/TPHA</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="HVS M/C/S"/><span>HVS M/C/S</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Seminal Fluid Analysis"/><span>Seminal Fluid Analysis</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="H. Pylori"/><span>H. Pylori</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Urine M/C/S"/><span>Urine M/C/S</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Occult Blood"/><span>Occult Blood</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Hepatitis B Screening"/><span>Hepatitis B Screening</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Hepatitis C"/><span>Hepatitis C</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Hepatitis A"/><span>Hepatitis A</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Paternity Dispute Investigation"/><span>Paternity Dispute Invests</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Antenatal Screening"/><span>Antenatal Screening</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Food Handlers Tests"/><span>Food Handlers Tests</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Routine Medical Examination"/><span>Routine Medical Exam</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Wound/Ear/Nose Swab"/><span>Wound/Ear/Nose Swab</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Urethra Swab"/><span>Urethra Swab</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Serum Tuberculin"/><span>Serum Tuberculin</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Stool M/C/S"/><span>Stool M/C/S</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Stool Microscopy"/><span>Stool Microscopy</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Blood Culture and Sensitivity"/><span>Blood Culture &amp; Sensitivity</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Rheumatoid Factor"/><span>Rheumatoid Factor</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="ASO Titre"/><span>ASO Titre</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Heaf/Mantoux Test"/><span>Heaf/Mantoux Test</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="CSF Microscopy and Cell Count"/><span>C.S.F. Microscopy &amp; Cell Count</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Retroviral Screening (HIV)"/><span>Retroviral Screening (HIV)</span></label>
+    </div>
+
+    <!-- HAEMATOLOGY -->
+    <div class="ssep">Haematology</div>
+    <div class="chk-grid">
+      <label class="chk-lbl"><input type="checkbox" value="Full Blood Count"/><span>Full Blood Count</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="HB"/><span>HB</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="PCV"/><span>PCV</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="WBC Total"/><span>WBC Total</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="WBC Differential"/><span>WBC Differential</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Genotype"/><span>Genotype</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Blood Group"/><span>Blood Group</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="ESR"/><span>ESR</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Sickle Cell Screening"/><span>Sickle Cell Screening</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Direct Coomb Test"/><span>Direct Coomb Test</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Indirect Coomb Test"/><span>Indirect Coomb Test</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Bleeding Time"/><span>Bleeding Time</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Clotting Time"/><span>Clotting Time</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Platelet Count"/><span>Platelet Count</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Mean Cell Volume"/><span>Mean Cell Volume</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Red Cell Count"/><span>Red Cell Count</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Bone Marrow Examination"/><span>Bone Marrow Examination</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Total Eosinophil Count"/><span>Total Eosinophil Count</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Malaria Parasite"/><span>Malaria Parasite</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Hormonal Profile"/><span>Hormonal Profile</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Ovulation Profile"/><span>Ovulation Profile</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Thyroid Screen"/><span>Thyroid Screen</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Menstrual Disorder"/><span>Menstrual Disorder</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="HIV 1 and 2"/><span>HIV 1&amp;2</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="HIV Confirmation Test"/><span>HIV Confirmation Test</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Gamma GT"/><span>Gamma GT</span></label>
+    </div>
+
+    <!-- CLINICAL CHEMISTRY -->
+    <div class="ssep">Clinical chemistry</div>
+    <div class="chk-grid">
+      <label class="chk-lbl"><input type="checkbox" value="Urinalysis"/><span>Urinalysis</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Fasting Blood Sugar"/><span>Fasting Blood Sugar</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Random Blood Sugar"/><span>Random Blood Sugar</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="2 HPP Blood Sugar"/><span>2 HPP Blood Sugar</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Glucose Tolerance GTT"/><span>Glucose Tolerance (GTT)</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="E/U/CR"/><span>E/U/CR</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Lithium Level"/><span>Lithium Level</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Full Lipid Studies"/><span>Full Lipid Studies</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Urea"/><span>Urea</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Sodium"/><span>Sodium</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Calcium"/><span>Calcium</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Triglyceride"/><span>Triglyceride</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Creatinine"/><span>Creatinine</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Potassium"/><span>Potassium</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Bicarbonate"/><span>Bicarbonate</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Chloride"/><span>Chloride</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Magnesium"/><span>Magnesium</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Liver Function Test"/><span>Liver Function Test</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Direct Bilirubin"/><span>Direct Bilirubin</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Total Bilirubin"/><span>Total Bilirubin</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Total Protein"/><span>Total Protein</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Globulin"/><span>Globulin</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Albumin"/><span>Albumin</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="LDL"/><span>LDL</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="LDH"/><span>LDH</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Phosphate"/><span>Phosphate</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Total Cholesterol"/><span>Total Cholesterol</span></label>
+      <label class="chk-lbl"><input type="checkbox" value="Uric Acid"/><span>Uric Acid</span></label>
+    </div>
+
+    <!-- VITAL SIGNS -->
+    <div class="ssep" style="margin-top:6px">Vital signs (always included)</div>
+    <div class="fr2" style="margin-bottom:10px">
+      <div><label class="fl">Blood Pressure</label><input type="text" id="inp-bp" placeholder="e.g. 120/80mmHg"/></div>
+      <div><label class="fl">Pulse Rate</label><input type="text" id="inp-pulse" placeholder="e.g. 80b/m"/></div>
+    </div>
+    <div class="fr2">
+      <div><label class="fl">Temperature</label><input type="text" id="inp-temp" placeholder="e.g. 36.5c"/></div>
+      <div><label class="fl">Respiration</label><input type="text" id="inp-resp" placeholder="e.g. 18c/m"/></div>
+    </div>
+
+    <!-- ACTIVE TEST RESULTS (populated dynamically) -->
+    <div id="active-sec" style="display:none">
+      <div class="ssep" style="margin-top:6px">Enter results for selected tests</div>
+      <p style="font-size:11px;color:var(--tmut);font-style:italic;margin-bottom:9px">Fill in result and set remark for each checked test.</p>
+      <div class="active-tests" id="active-list"></div>
+    </div>
+
+    <!-- CUSTOM TESTS -->
+    <div class="ssep" style="margin-top:6px">Additional / custom tests</div>
+    <p style="font-size:11px;color:var(--tmut);font-style:italic;margin-bottom:9px">Add any test not listed above.</p>
+    <div class="custom-list" id="custom-list"></div>
+    <button type="button" class="btn-add-row" onclick="addCustomRow()">
+      <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      Add custom test
+    </button>
+
+    <!-- FITNESS DECISION -->
+    <div style="margin-top:16px">
+      <div class="fitness-box">
+        <div class="fitness-title">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          Fitness Assessment Decision
+        </div>
+        <div class="fitness-opts">
+          <label class="fit-opt sel-fit" id="lbl-fit" onclick="setFitness('fit')">
+            <input type="radio" name="fitness" value="fit" checked/>
+            <span class="fit-opt-lbl">&#10003; Certified Fit</span>
+          </label>
+          <label class="fit-opt" id="lbl-unfit" onclick="setFitness('unfit')">
+            <input type="radio" name="fitness" value="unfit"/>
+            <span class="fit-opt-lbl">&#10007; Not Fit</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMMENT BOX -->
+    <div class="cmnt-box" style="margin-top:11px">
+      <div class="cmnt-head">
+        <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+        Lab Attendant Comments / Clinical Remarks
+      </div>
+      <textarea id="inp-comment" placeholder="Enter clinical observations, recommendations or additional remarks here..."></textarea>
+    </div>
+
+    <button class="btn-gen" onclick="generateCert()">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+      Generate Certificate
+    </button>
+  </div>
+</div>
+
+<!-- ═══ PREVIEW ═══ -->
+<div class="preview-panel">
+  <div class="prev-label">Certificate preview</div>
+  <div class="cert-wrap">
+    <div id="cert-empty" class="empty-state">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 15h8v2H8zm0-4h8v2H8zm0-4h5v2H8z"/></svg>
+      <p>Select tests, fill results &amp; click<br/><strong>Generate Certificate</strong></p>
+    </div>
+
+    <div id="certificate" style="display:none">
+      <div class="c-topbar"></div>
+
+      <!-- CERT HEADER -->
+      <div class="c-header">
+        <div>
+          <svg width="60" height="60" viewBox="0 0 60 60">
+            <circle cx="30" cy="30" r="28" fill="#1a6b3c" stroke="#c9a84c" stroke-width="2"/>
+            <text x="30" y="16" text-anchor="middle" font-size="7" fill="#c9a84c" font-family="serif" font-weight="bold" letter-spacing="0.6">GABDEL</text>
+            <text x="30" y="22" text-anchor="middle" font-size="4" fill="#fff" font-family="sans-serif" letter-spacing="0.4">GLOBAL MEDICAL</text>
+            <line x1="30" y1="24" x2="30" y2="43" stroke="#c9a84c" stroke-width="1.5"/>
+            <path d="M22 27 Q30 24 38 27" stroke="#fff" stroke-width="1" fill="none"/>
+            <path d="M26.5 24.5 C23 28 23 33 30 31.5 C37 30 37 35 33.5 38" stroke="#fff" stroke-width="1.1" fill="none"/>
+            <path d="M33.5 24.5 C37 28 37 33 30 31.5 C23 30 23 35 26.5 38" stroke="#fff" stroke-width="1.1" fill="none"/>
+            <circle cx="30" cy="24.5" r="2" fill="#c9a84c"/>
+            <text x="30" y="53" text-anchor="middle" font-size="3.8" fill="#c9a84c" font-family="sans-serif" letter-spacing="0.4">LABORATORY</text>
+          </svg>
+        </div>
+        <div class="c-titles">
+          <div class="c-lab-name">Gabdel Global</div>
+          <div class="c-lab-italic">Medical Laboratory</div>
+          <div class="c-lab-addr">Green Color Complex, Adjacent to Idiroko Primary School, Efe to Inside, Ibeju-Lekki, Lagos State<br/>Tel: 08066821840 &nbsp;|&nbsp; 08170525490</div>
+        </div>
+      </div>
+
+      <div class="c-dept-bar">Immunology / Laboratory Services</div>
+      <div class="c-form-title">Laboratory Result Certificate</div>
+
+      <!-- PATIENT INFO -->
+      <table class="c-info-tbl">
+        <tr>
+          <td><span class="ci-lbl">Surname</span><span class="ci-val" id="out-surname">-</span></td>
+          <td><span class="ci-lbl">First Name</span><span class="ci-val" id="out-firstname">-</span></td>
+        </tr>
+        <tr>
+          <td><span class="ci-lbl">Gender / Age</span><span class="ci-val" id="out-gage">-</span></td>
+          <td><span class="ci-lbl">Date</span><span class="ci-val" id="out-date">-</span></td>
+        </tr>
+        <tr>
+          <td><span class="ci-lbl">Referring Clinician</span><span class="ci-val" id="out-clinician">-</span></td>
+          <td><span class="ci-lbl">Phone</span><span class="ci-val" id="out-phone">-</span></td>
+        </tr>
+        <tr>
+          <td colspan="2"><span class="ci-lbl">Referred By</span><span class="ci-val" id="out-company">-</span></td>
+        </tr>
+        <tr>
+          <td colspan="2" style="border-bottom:none"><span class="ci-lbl">Clinical Diagnosis</span><span class="ci-val" id="out-diag">-</span></td>
+        </tr>
+      </table>
+
+      <!-- VITAL SIGNS -->
+      <div class="c-sec-title">Vital Signs</div>
+      <table class="c-tbl">
+        <tr><td>Blood Pressure</td><td id="out-bp">-</td><td class="rn">Normal</td></tr>
+        <tr><td>Pulse Rate</td><td id="out-pulse">-</td><td class="rn">Normal</td></tr>
+        <tr><td>Temperature</td><td id="out-temp">-</td><td class="rn">Normal</td></tr>
+        <tr><td>Respiration</td><td id="out-resp">-</td><td class="rn">Normal</td></tr>
+      </table>
+
+      <!-- SELECTED TEST RESULTS -->
+      <div id="out-tests-sec" style="display:none">
+        <div class="c-sec-title">Laboratory Investigation Results</div>
+        <table class="c-tbl"><tbody id="out-tests-body"></tbody></table>
+      </div>
+
+      <!-- CUSTOM TEST RESULTS -->
+      <div id="out-cust-sec" style="display:none">
+        <div class="c-sec-title">Additional Tests</div>
+        <table class="c-tbl"><tbody id="out-cust-body"></tbody></table>
+      </div>
+
+      <!-- FITNESS BADGE -->
+      <div id="out-fit-badge" class="c-fit-badge badge-fit">
+        <span id="out-fit-icon">&#10003;</span>
+        <span id="out-fit-text">CERTIFIED MEDICALLY FIT</span>
+      </div>
+
+      <!-- COMMENT -->
+      <div class="c-comment-cert"><strong>Comments:</strong> <span id="out-comment">-</span></div>
+
+      <!-- FOOTER -->
+      <div class="c-footer">
+        <div class="c-foot-left">
+          <strong>Gabdel Global Medical Laboratory</strong><br/>
+          ______________________<br/>
+          Authorized Medical Officer<br/>
+          <span style="font-size:8px;color:#c9a84c">Ref: <span id="out-ref">-</span></span>
+        </div>
+        <div class="c-qr-zone">
+          <div id="qr-container"></div>
+          <div class="c-qr-label">Scan to verify</div>
+        </div>
+        <div style="text-align:right">
+          <div class="c-stamp">Gabdel<br/>Global<br/>Medical Lab<br/>* Certified *</div>
+          <div class="c-expires" id="out-expires">EXPIRES -</div>
+          <div class="c-refsmall" id="out-refsmall">-</div>
+        </div>
+      </div>
+      <div class="c-infobar">
+        <span>Gabdel Global Medical Laboratory | Ibeju-Lekki, Lagos | Gov. Approved</span>
+        <span id="out-inforef">-</span>
+      </div>
+      <div class="c-bottombar"></div>
+    </div>
+  </div>
+
+  <div class="actions" id="cert-actions" style="display:none">
+    <button class="btn-act btn-print" onclick="window.print()">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+      Print Certificate
+    </button>
+    <button class="btn-act btn-reset" onclick="resetForm()">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+      New Certificate
+    </button>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<footer style="background:var(--navy);color:rgba(255,255,255,.38);text-align:center;font-size:10.5px;padding:14px;letter-spacing:.04em">
+  &copy; 2026 <span style="color:var(--gold)">Gabdel Global Medical Laboratory</span> &nbsp;|&nbsp; All results digitally verified via QR &nbsp;|&nbsp; Ibeju-Lekki, Lagos &nbsp;|&nbsp; Gov. Approved
+</footer>
+
+<script>
+// ── INIT ──
+document.getElementById('inp-date').valueAsDate = new Date();
+var customRowCount = 0;
+var currentFitness = 'fit';
+
+// ── REMARK SELECT COLOUR ──
+function applyRemarkStyle(selectEl) {
+  selectEl.className = 'rsm';
+  var v = selectEl.value;
+  if (v === 'Normal') selectEl.className = 'rsm rsm-n';
+  else if (v === 'Abnormal') selectEl.className = 'rsm rsm-a';
+  else selectEl.className = 'rsm rsm-x';
+}
+
+function makeRemarkSelect() {
+  var sel = document.createElement('select');
+  sel.className = 'rsm rsm-n';
+  sel.innerHTML = '<option value="Normal">Normal</option><option value="Abnormal">Abnormal</option><option value="N/A">N/A</option>';
+  sel.addEventListener('change', function() { applyRemarkStyle(this); });
+  return sel;
+}
+
+// ── FITNESS TOGGLE ──
+function setFitness(v) {
+  currentFitness = v;
+  document.getElementById('lbl-fit').className = 'fit-opt' + (v === 'fit' ? ' sel-fit' : '');
+  document.getElementById('lbl-unfit').className = 'fit-opt' + (v === 'unfit' ? ' sel-unfit' : '');
+}
+
+// ── CHECKBOX → ACTIVE TEST ROWS ──
+var allCheckboxes = document.querySelectorAll('.chk-lbl input[type=checkbox]');
+for (var ci = 0; ci < allCheckboxes.length; ci++) {
+  allCheckboxes[ci].addEventListener('change', syncActiveTests);
+}
+
+function syncActiveTests() {
+  var checkedBoxes = document.querySelectorAll('.chk-lbl input[type=checkbox]:checked');
+  var checkedValues = [];
+  for (var i = 0; i < checkedBoxes.length; i++) checkedValues.push(checkedBoxes[i].value);
+
+  var list = document.getElementById('active-list');
+  var sec = document.getElementById('active-sec');
+
+  // Remove rows whose test was unchecked
+  var existingRows = list.querySelectorAll('.test-row');
+  for (var i = 0; i < existingRows.length; i++) {
+    if (checkedValues.indexOf(existingRows[i].getAttribute('data-test')) === -1) {
+      existingRows[i].parentNode.removeChild(existingRows[i]);
+    }
+  }
+
+  // Add rows for newly checked tests
+  for (var i = 0; i < checkedBoxes.length; i++) {
+    var testName = checkedBoxes[i].value;
+    if (!list.querySelector('[data-test="' + testName + '"]')) {
+      var row = document.createElement('div');
+      row.className = 'test-row';
+      row.setAttribute('data-test', testName);
+
+      var nameDiv = document.createElement('div');
+      nameDiv.className = 'test-row-name';
+      nameDiv.textContent = testName;
+
+      var fieldsDiv = document.createElement('div');
+      fieldsDiv.className = 'test-row-fields';
+
+      var resultInput = document.createElement('input');
+      resultInput.type = 'text';
+      resultInput.placeholder = 'Result value';
+
+      var remarkSel = makeRemarkSelect();
+
+      var removeBtn = document.createElement('button');
+      removeBtn.className = 'btn-rem';
+      removeBtn.innerHTML = '&#215;';
+      removeBtn.title = 'Remove';
+      removeBtn.setAttribute('data-test', testName);
+      removeBtn.onclick = function() {
+        var t = this.getAttribute('data-test');
+        var cb = document.querySelector('.chk-lbl input[value="' + t + '"]');
+        if (cb) cb.checked = false;
+        var r = list.querySelector('[data-test="' + t + '"]');
+        if (r) r.parentNode.removeChild(r);
+        sec.style.display = list.children.length > 0 ? 'block' : 'none';
+      };
+
+      fieldsDiv.appendChild(resultInput);
+      fieldsDiv.appendChild(remarkSel);
+      fieldsDiv.appendChild(removeBtn);
+      row.appendChild(nameDiv);
+      row.appendChild(fieldsDiv);
+      list.appendChild(row);
+    }
+  }
+  sec.style.display = list.children.length > 0 ? 'block' : 'none';
+}
+
+// ── CUSTOM ROWS ──
+function addCustomRow() {
+  customRowCount++;
+  var list = document.getElementById('custom-list');
+  var row = document.createElement('div');
+  row.className = 'cust-row';
+
+  var fieldsDiv = document.createElement('div');
+  fieldsDiv.className = 'cust-row-fields';
+
+  var numSpan = document.createElement('span');
+  numSpan.className = 'row-num';
+  numSpan.textContent = customRowCount;
+
+  var nameInput = document.createElement('input');
+  nameInput.type = 'text';
+  nameInput.className = 'cust-name';
+  nameInput.placeholder = 'Test name';
+
+  var resultInput = document.createElement('input');
+  resultInput.type = 'text';
+  resultInput.className = 'cust-result';
+  resultInput.placeholder = 'Result';
+
+  var remarkSel = makeRemarkSelect();
+
+  var removeBtn = document.createElement('button');
+  removeBtn.className = 'btn-rem';
+  removeBtn.innerHTML = '&#215;';
+  removeBtn.title = 'Remove';
+  removeBtn.onclick = function() {
+    row.parentNode.removeChild(row);
+    var remaining = document.querySelectorAll('.cust-row .row-num');
+    for (var i = 0; i < remaining.length; i++) remaining[i].textContent = i + 1;
+    customRowCount = document.querySelectorAll('.cust-row').length;
+  };
+
+  fieldsDiv.appendChild(numSpan);
+  fieldsDiv.appendChild(nameInput);
+  fieldsDiv.appendChild(resultInput);
+  fieldsDiv.appendChild(remarkSel);
+  fieldsDiv.appendChild(removeBtn);
+  row.appendChild(fieldsDiv);
+  list.appendChild(row);
+  nameInput.focus();
+}
+
+// ── HELPERS ──
+function zp(n) { return String(n).padStart(2, '0'); }
+function fmtDate(d) { return zp(d.getDate()) + '/' + zp(d.getMonth() + 1) + '/' + d.getFullYear(); }
+function genRef() {
+  return 'GML' + Date.now().toString(36).toUpperCase().slice(-5) + Math.random().toString(36).substr(2, 3).toUpperCase();
+}
+function setEl(id, text) {
+  var el = document.getElementById(id);
+  if (el) el.textContent = text;
+}
+
+// ── GENERATE CERTIFICATE ──
+function generateCert() {
+  try {
+    var surname   = document.getElementById('inp-surname').value.trim() || 'N/A';
+    var firstname = document.getElementById('inp-firstname').value.trim() || 'N/A';
+    var gender    = document.getElementById('inp-gender').value || 'N/A';
+    var age       = document.getElementById('inp-age').value.trim() || 'N/A';
+    var dateVal   = document.getElementById('inp-date').value;
+    var company   = document.getElementById('inp-company').value.trim() || 'N/A';
+    var clinician = document.getElementById('inp-clinician').value.trim() || 'N/A';
+    var phone     = document.getElementById('inp-phone').value.trim() || 'N/A';
+    var diagnosis = document.getElementById('inp-diagnosis').value.trim() || 'N/A';
+    var refsig    = document.getElementById('inp-refsig').value.trim() || 'N/A';
+    var bp        = document.getElementById('inp-bp').value.trim() || 'Not recorded';
+    var pulse     = document.getElementById('inp-pulse').value.trim() || 'Not recorded';
+    var temp      = document.getElementById('inp-temp').value.trim() || 'Not recorded';
+    var resp      = document.getElementById('inp-resp').value.trim() || 'Not recorded';
+    var comment   = document.getElementById('inp-comment').value.trim() || 'No additional remarks.';
+    var months    = parseInt(document.getElementById('inp-months').value) || 6;
+
+    var today = dateVal ? new Date(dateVal + 'T00:00:00') : new Date();
+    var expires = new Date(today);
+    expires.setMonth(expires.getMonth() + months);
+    var certRef = genRef();
+
+    // ── Build QR verification string ──
+    // QR encodes only the 7 key verification fields to avoid data overflow
+    var fitnessLabel = currentFitness === 'fit' ? 'CERTIFIED FIT' : 'NOT FIT';
+    var qrText = [
+      'GABDEL GLOBAL MEDICAL LABORATORY',
+      'CERT NO: ' + certRef,
+      'PATIENT: ' + surname.toUpperCase() + ' ' + firstname.toUpperCase(),
+      'AGE: ' + age,
+      'DATE: ' + fmtDate(today),
+      'STATUS: ' + fitnessLabel,
+      'EXPIRES: ' + fmtDate(expires)
+    ].join(' | ');
+
+    // Still read active/custom rows for the certificate display below
+    var activeRows = document.getElementById('active-list').querySelectorAll('.test-row');
+    var custRows   = document.getElementById('custom-list').querySelectorAll('.cust-row');
+
+    // ── Populate certificate fields ──
+    setEl('out-surname',   surname.toUpperCase());
+    setEl('out-firstname', firstname.toUpperCase());
+    setEl('out-gage',      gender + ' / ' + age);
+    setEl('out-date',      fmtDate(today));
+    setEl('out-clinician', clinician);
+    setEl('out-phone',     phone);
+    setEl('out-company',   company);
+    setEl('out-diag',      diagnosis);
+    setEl('out-bp',        bp);
+    setEl('out-pulse',     pulse);
+    setEl('out-temp',      temp);
+    setEl('out-resp',      resp);
+    setEl('out-expires',   'EXPIRES ' + fmtDate(expires));
+    setEl('out-ref',       certRef);
+    setEl('out-refsmall',  certRef);
+    setEl('out-inforef',   certRef);
+    setEl('out-comment',   comment);
+
+    // ── Fitness badge ──
+    var badge = document.getElementById('out-fit-badge');
+    if (currentFitness === 'fit') {
+      badge.className = 'c-fit-badge badge-fit';
+      setEl('out-fit-icon', '\u2713');
+      setEl('out-fit-text', 'CERTIFIED MEDICALLY FIT');
+    } else {
+      badge.className = 'c-fit-badge badge-unfit';
+      setEl('out-fit-icon', '\u2717');
+      setEl('out-fit-text', 'NOT MEDICALLY FIT');
+    }
+
+    // ── Selected test results table ──
+    var tbody = document.getElementById('out-tests-body');
+    tbody.innerHTML = '';
+    if (activeRows.length > 0) {
+      document.getElementById('out-tests-sec').style.display = 'block';
+      for (var i = 0; i < activeRows.length; i++) {
+        var tName   = activeRows[i].getAttribute('data-test');
+        var tResult = activeRows[i].querySelector('input[type=text]').value.trim() || '-';
+        var tRemark = activeRows[i].querySelector('select').value;
+        var cls     = tRemark === 'Normal' ? 'rn' : tRemark === 'Abnormal' ? 'ra' : 'rx';
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td>' + tName + '</td><td>' + tResult + '</td><td class="' + cls + '">' + tRemark + '</td>';
+        tbody.appendChild(tr);
+      }
+    } else {
+      document.getElementById('out-tests-sec').style.display = 'none';
+    }
+
+    // ── Custom test results table ──
+    var cbody = document.getElementById('out-cust-body');
+    cbody.innerHTML = '';
+    var hasCustom = false;
+    for (var i = 0; i < custRows.length; i++) {
+      var cName   = custRows[i].querySelector('.cust-name').value.trim();
+      var cResult = custRows[i].querySelector('.cust-result').value.trim() || '-';
+      var cRemark = custRows[i].querySelector('select').value;
+      if (!cName) continue;
+      hasCustom = true;
+      var cls = cRemark === 'Normal' ? 'rn' : cRemark === 'Abnormal' ? 'ra' : 'rx';
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + cName + '</td><td>' + cResult + '</td><td class="' + cls + '">' + cRemark + '</td>';
+      cbody.appendChild(tr);
+    }
+    document.getElementById('out-cust-sec').style.display = hasCustom ? 'block' : 'none';
+
+    // ── Generate QR Code ──
+    var qrContainer = document.getElementById('qr-container');
+    qrContainer.innerHTML = '';
+    new QRCode(qrContainer, {
+      text: qrText,
+      width: 82,
+      height: 82,
+      colorDark: '#0a1628',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+
+    // ── Show certificate ──
+    document.getElementById('cert-empty').style.display = 'none';
+    document.getElementById('certificate').style.display = 'block';
+    document.getElementById('cert-actions').style.display = 'grid';
+
+    if (window.innerWidth <= 820) {
+      document.querySelector('.preview-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+  } catch (err) {
+    alert('Error generating certificate: ' + err.message);
+    console.error('Certificate generation error:', err);
+  }
+}
+
+// ── RESET ──
+function resetForm() {
+  var textFields = ['inp-surname','inp-firstname','inp-age','inp-clinician','inp-phone','inp-company','inp-diagnosis','inp-refsig','inp-bp','inp-pulse','inp-temp','inp-resp','inp-comment'];
+  for (var i = 0; i < textFields.length; i++) document.getElementById(textFields[i]).value = '';
+  document.getElementById('inp-date').valueAsDate = new Date();
+  document.getElementById('inp-gender').selectedIndex = 0;
+  document.getElementById('inp-months').selectedIndex = 0;
+
+  var checkboxes = document.querySelectorAll('.chk-lbl input[type=checkbox]');
+  for (var i = 0; i < checkboxes.length; i++) checkboxes[i].checked = false;
+
+  document.getElementById('active-list').innerHTML = '';
+  document.getElementById('active-sec').style.display = 'none';
+  document.getElementById('custom-list').innerHTML = '';
+  customRowCount = 0;
+  setFitness('fit');
+
+  document.getElementById('cert-empty').style.display = 'block';
+  document.getElementById('certificate').style.display = 'none';
+  document.getElementById('cert-actions').style.display = 'none';
+  document.getElementById('inp-surname').focus();
+}
+</script>
+</body>
+</html>
